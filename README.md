@@ -13,10 +13,3 @@ cd angular11 && ng serve --prod --port 4202
 
 Now you can use Chrome dev tools to compare `detectChanges` execution time.
 
-## My results
-
-|  | Angular 11 | Angular 9 |
-| --- | --- | --- |
-| 1k components | 197ms | 191ms |
-| 10k components | 230ms | 230ms |
-

@@ -1,10 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Inject, InjectionToken, Input, OnInit} from '@angular/core';
+
+export const LABEL_TOKEN = new InjectionToken('');
 
 @Component({
   selector: 'app-test-label',
   template: `
     <div>
-      <span *ngIf="!!label">{{ label }}</span>
+      <span>{{ label }}</span>
     </div>
   `,
   styles: [`
@@ -24,10 +26,7 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class TestLabelComponent implements OnInit {
 
-  @Input()
-  label: string;
-
-  constructor() { }
+  constructor(@Inject(LABEL_TOKEN) readonly label: string) { }
 
   ngOnInit(): void {
   }
