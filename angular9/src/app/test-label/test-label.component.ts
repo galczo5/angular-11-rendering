@@ -1,11 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
+import { BaseComponent } from 'src/app/base.component';
 
 @Component({
   selector: 'app-test-label',
   template: `
-    <div>
-      <span *ngIf="!!label">{{ label }}</span>
-    </div>
+    <span>{{ label }}</span>
   `,
   styles: [`
     :host {
@@ -22,14 +21,13 @@ import {Component, Input, OnInit} from '@angular/core';
     }
   `]
 })
-export class TestLabelComponent implements OnInit {
+export class TestLabelComponent extends BaseComponent {
 
   @Input()
   label: string;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor() {
+    super();
   }
 
 }

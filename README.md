@@ -17,6 +17,5 @@ Now you can use Chrome dev tools to compare `detectChanges` execution time.
 
 |  | Angular 11 | Angular 9 |
 | --- | --- | --- |
-| 1k components | 197ms | 191ms |
-| 10k components | 230ms | 230ms |
+| 50k components | 8,67s | 7,81s |
 

@@ -1,12 +1,13 @@
 import {Component, Input} from '@angular/core';
+import { BaseComponent } from 'src/app/base.component';
 
 @Component({
   selector: 'app-test',
   template: `
     <div class="flex">
-      <div *ngFor="let i of getArray(); let index = index">
-        <app-test-label [label]="getLabel(index)"></app-test-label>
-      </div>
+      <ng-container *ngFor="let i of getArray(); let index = index">
+        <app-test-label app-test-directive [test]="'test'" [label]="getLabel(index)">.</app-test-label>
+      </ng-container>
     </div>
   `,
   styles: [`
@@ -16,14 +17,16 @@ import {Component, Input} from '@angular/core';
     }
   `]
 })
-export class TestComponent {
+export class TestComponent extends BaseComponent {
 
   @Input()
   count = 0;
 
   array: number[] = [];
 
-  constructor() { }
+  constructor() {
+    super();
+  }
 
   getArray(): Array<number> {
     return new Array<number>(this.count);
