@@ -11,11 +11,5 @@ cd angular9 && ng serve --prod --port 4201
 cd angular11 && ng serve --prod --port 4202
 ```
 
+Start recording chrome profile and the click "refresh" button.
 Now you can use Chrome dev tools to compare `detectChanges` execution time.
-
-## My results
-
-|  | Angular 11 | Angular 9 |
-| --- | --- | --- |
-| 50k components | 8,67s | 7,81s |
-
