@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import { BaseComponent } from 'src/app/base.component';
+import {fromEvent} from "rxjs";
 
 @Component({
   selector: 'app-test-label',
   template: `
-    <span>{{ label }}</span>
+    {{ text }}
   `,
   styles: [`
     :host {
@@ -21,13 +22,32 @@ import { BaseComponent } from 'src/app/base.component';
     }
   `]
 })
-export class TestLabelComponent extends BaseComponent {
+export class TestLabelComponent extends BaseComponent implements OnInit, OnChanges {
 
   @Input()
   label: string;
 
-  constructor() {
+  text: string;
+
+  constructor(private readonly elementRef: ElementRef,
+              private readonly changeDetectorRef: ChangeDetectorRef) {
     super();
+  }
+
+  ngOnInit(): void {
+    this.text = this.label;
+    this.selectClickEvent();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {}
+
+  selectClickEvent(): void {
+    fromEvent(this.elementRef.nativeElement, 'click')
+      .pipe(this.destroyWithComponent())
+      .subscribe(() => {
+        this.text = this.label + ' CLICKED';
+        this.changeDetectorRef.detectChanges();
+      });
   }
 
 }

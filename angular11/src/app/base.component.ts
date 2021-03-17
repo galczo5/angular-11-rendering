@@ -1,20 +1,19 @@
 import { Directive, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import {MonoTypeOperatorFunction, Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Directive()
-export abstract class BaseComponent implements OnInit, OnDestroy {
+export abstract class BaseComponent {
 
-  private init$: Subject<void> = new Subject<void>();
   private destroy$: Subject<void> = new Subject<void>();
 
-  ngOnDestroy(): void {
+  private ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
-  ngOnInit(): void {
-    this.init$.next();
-    this.init$.complete();
+  destroyWithComponent(): MonoTypeOperatorFunction<unknown> {
+    return takeUntil(this.destroy$);
   }
 
 }

@@ -5,9 +5,7 @@ import { BaseComponent } from 'src/app/base.component';
   selector: 'app-test',
   template: `
     <div class="flex">
-      <ng-container *ngFor="let i of getArray(); let index = index">
-        <app-test-label app-test-directive [test]="'test'" [label]="getLabel(index)">.</app-test-label>
-      </ng-container>
+      <app-test-label *ngFor="let i of getArray(); let index = index" [label]="getLabel(index)"></app-test-label>
     </div>
   `,
   styles: [`
@@ -19,8 +17,7 @@ import { BaseComponent } from 'src/app/base.component';
 })
 export class TestComponent extends BaseComponent {
 
-  @Input()
-  count = 0;
+  count = 20000;
 
   array: number[] = [];
 

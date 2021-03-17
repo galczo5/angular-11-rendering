@@ -7,14 +7,12 @@ import {takeUntil} from 'rxjs/operators';
   template: `
     <h1>{{ title }}</h1>
     <button (click)="refreshView()">Refresh</button>
-    <app-test *ngIf="!destroyed" [count]="counter"></app-test>
+    <app-test *ngIf="!destroyed"></app-test>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'angular11';
-
-  counter = 50000;
 
   private readonly destroy$: Subject<void> = new Subject<void>();
 
