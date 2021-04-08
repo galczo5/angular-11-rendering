@@ -7,7 +7,9 @@ import {takeUntil} from 'rxjs/operators';
   template: `
     <h1>{{ title }}</h1>
     <button (click)="refreshView()">Refresh</button>
-    <app-test *ngIf="!destroyed"></app-test>
+    <ng-container *ngIf="!destroyed">
+      <app-test></app-test>
+    </ng-container>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -16,7 +18,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private readonly destroy$: Subject<void> = new Subject<void>();
 
-  destroyed: boolean = true;
+  destroyed = true;
 
   constructor(private readonly changeDetectorRef: ChangeDetectorRef) {
   }
@@ -29,16 +31,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  refreshView() {
-    this.destroyed = true;
+  getArray(): Array<number> {
+    return new Array<number>(20000).fill(0);
+  }
+
+  refreshView(): void {
+    this.destroyed = !this.destroyed;
     this.changeDetectorRef.detectChanges();
-
-    timer(1000)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.destroyed = false;
-        this.changeDetectorRef.detectChanges();
-      })
-
   }
 }

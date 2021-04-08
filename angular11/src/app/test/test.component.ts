@@ -1,11 +1,14 @@
-import {Component, Input} from '@angular/core';
+import {ChangeDetectorRef, Component, ContentChildren, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import { BaseComponent } from 'src/app/base.component';
+import {interval} from "rxjs";
+import {take} from "rxjs/operators";
 
 @Component({
   selector: 'app-test',
   template: `
-    <div class="flex">
-      <app-test-label *ngFor="let i of getArray(); let index = index" [label]="getLabel(index)"></app-test-label>
+    <h2>{{iteration}}</h2>
+    <div *ngIf="visible" class="flex">
+      <app-test-label *ngFor="let i of getArray()" label="Test Label"></app-test-label>
     </div>
   `,
   styles: [`
@@ -15,14 +18,35 @@ import { BaseComponent } from 'src/app/base.component';
     }
   `]
 })
-export class TestComponent extends BaseComponent {
+export class TestComponent extends BaseComponent implements OnInit {
 
-  count = 20000;
+  count = 1000;
 
   array: number[] = [];
 
-  constructor() {
+  visible = false;
+
+  iteration = 0;
+
+  constructor(private readonly changeDetectorRef: ChangeDetectorRef) {
     super();
+  }
+
+  ngOnInit(): void {
+    interval(100)
+      .pipe(
+        take(100),
+        this.destroyWithComponent()
+      )
+      .subscribe(() => {
+        this.visible = !this.visible;
+
+        if (this.visible) {
+          this.iteration++;
+        }
+
+        this.changeDetectorRef.detectChanges();
+      });
   }
 
   getArray(): Array<number> {
