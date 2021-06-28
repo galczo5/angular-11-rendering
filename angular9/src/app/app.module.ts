@@ -2,17 +2,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { TestComponent } from './test/test.component';
-import { TestLabelComponent } from './test-label/test-label.component';
+import { modules } from './modules';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    TestComponent,
-    TestLabelComponent
+    AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    ...modules
   ],
   providers: [],
   bootstrap: [AppComponent]
